@@ -6,47 +6,32 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="5dp">
+        android:layout_width="414dp"
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="-4dp"
+        tools:layout_editor_absoluteY="1dp">
 
-        <Button
-            android:id="@+id/Images"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/keyboard"
-            android:text="Images"
-            app:layout_column="2"
-            app:layout_row="0"
-            tools:ignore="DuplicateSpeakableTextCheck" />
+            tools:srcCompat="@tools:sample/avatars" />
 
-        <Button
-            android:id="@+id/Phrases"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/keyboard"
-            android:text="Phrases"
-            app:layout_column="0"
-            app:layout_row="0" />
+            tools:srcCompat="@tools:sample/avatars" />
 
-        <Button
-            android:id="@+id/Letters"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/keyboard"
-            android:text="Keyboard"
-            app:layout_column="1"
-            app:layout_row="0" />
-
-
+            tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
