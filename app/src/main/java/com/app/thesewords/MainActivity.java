@@ -9,11 +9,46 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends Activity {
+
+    RecyclerView recyclerViewRed;
+    RecyclerView recyclerViewBlue;
+    RecyclerView recyclerViewYellow;
+    RecyclerView recyclerViewGreen;
+
+    // Array list for recycler view data source
+    ArrayList<String> sourceRed;
+    ArrayList<String> sourceBlue;
+    ArrayList<String> sourceYellow;
+    ArrayList<String> sourceGreen;
+
+    // Layout Manager
+    RecyclerView.LayoutManager RecyclerViewLayoutManagerRed;
+    RecyclerView.LayoutManager RecyclerViewLayoutManagerBlue;
+    RecyclerView.LayoutManager RecyclerViewLayoutManagerYellow;
+    RecyclerView.LayoutManager RecyclerViewLayoutManagerGreen;
+
+    // adapter class object
+    Adapter adapterRed;
+    Adapter adapterBlue;
+    Adapter adapterYellow;
+    Adapter adapterGreen;
+
+    // Linear Layout Manager
+    LinearLayoutManager HorizontalLayoutRed;
+    LinearLayoutManager HorizontalLayoutBlue;
+    LinearLayoutManager HorizontalLayoutYellow;
+    LinearLayoutManager HorizontalLayoutGreen;
+
+    View ChildView;
+    int RecyclerViewItemPosition;
 
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
 
@@ -27,12 +62,54 @@ public class MainActivity extends Activity {
         decorView.setSystemUiVisibility(uiOptions);
         setContentView(R.layout.main_activity);
         checkAndRequestPermissions(MainActivity.this);
-        View LettersActivity = findViewById(R.id.Letters);
-        View PhrasesActivity = findViewById(R.id.Phrases);
-        View ImagesActivity = findViewById(R.id.Images);
-        goToActivity(LettersActivity, Letters.class);
-        goToActivity(PhrasesActivity, Phrases.class);
-        goToActivity(ImagesActivity, Images.class);
+
+        recyclerViewRed    =  findViewById(R.id.recyclerview_red);
+        recyclerViewBlue   =  findViewById(R.id.recyclerview_blue);
+        recyclerViewYellow =  findViewById(R.id.recyclerview_yellow);
+        recyclerViewGreen  =  findViewById(R.id.recyclerview_green);
+
+        RecyclerViewLayoutManagerRed    = new LinearLayoutManager(getApplicationContext());
+        RecyclerViewLayoutManagerBlue   = new LinearLayoutManager(getApplicationContext());
+        RecyclerViewLayoutManagerYellow = new LinearLayoutManager(getApplicationContext());
+        RecyclerViewLayoutManagerGreen  =  new LinearLayoutManager(getApplicationContext());
+
+        // Set LayoutManager on Recycler View
+        recyclerViewRed.setLayoutManager(RecyclerViewLayoutManagerRed);
+        recyclerViewBlue.setLayoutManager(RecyclerViewLayoutManagerBlue);
+        recyclerViewYellow.setLayoutManager(RecyclerViewLayoutManagerYellow);
+        recyclerViewGreen.setLayoutManager(RecyclerViewLayoutManagerGreen);
+
+        // Adding items to RecyclerView.
+        sourceRed    = AddItemsToRecyclerViewArrayList(sourceRed);
+        sourceBlue   = AddItemsToRecyclerViewArrayList(sourceBlue);
+        sourceYellow = AddItemsToRecyclerViewArrayList(sourceYellow);
+        sourceGreen  = AddItemsToRecyclerViewArrayList(sourceGreen);
+
+        // calling constructor of adapter
+        // with source list as a parameter
+        adapterRed    = new Adapter(sourceRed);
+        adapterBlue   = new Adapter(sourceBlue);
+        adapterYellow = new Adapter(sourceYellow);
+        adapterGreen  = new Adapter(sourceGreen);
+
+        // Set Horizontal Layout Manager
+        // for Recycler view
+        HorizontalLayoutRed    = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        HorizontalLayoutBlue   = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        HorizontalLayoutYellow = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        HorizontalLayoutGreen  = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+
+        recyclerViewRed.setLayoutManager(HorizontalLayoutRed);
+        recyclerViewBlue.setLayoutManager(HorizontalLayoutBlue);
+        recyclerViewYellow.setLayoutManager(HorizontalLayoutYellow);
+        recyclerViewGreen.setLayoutManager(HorizontalLayoutGreen);
+
+        // Set adapter on recycler view
+        recyclerViewRed.setAdapter(adapterRed);
+        recyclerViewBlue.setAdapter(adapterBlue);
+        recyclerViewYellow.setAdapter(adapterYellow);
+        recyclerViewGreen.setAdapter(adapterGreen);
+
     }
 
     @Override
@@ -105,6 +182,21 @@ public class MainActivity extends Activity {
             return false;
         }
         return true;
+    }
+
+    public ArrayList<String> AddItemsToRecyclerViewArrayList(ArrayList<String> source)
+    {
+        // Adding items to ArrayList
+        source = new ArrayList<>();
+        source.add("gfg");
+        source.add("is");
+        source.add("best");
+        source.add("site");
+        source.add("for");
+        source.add("interview");
+        source.add("preparation");
+
+        return source;
     }
 }
 

@@ -31,7 +31,6 @@
                     android:id="@+id/change_grid"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/add_round_grid"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/add_image"
@@ -43,7 +42,7 @@
                     android:id="@+id/add_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/add_round_add"
+
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
