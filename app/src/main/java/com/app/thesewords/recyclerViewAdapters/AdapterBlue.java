@@ -1,6 +1,7 @@
 package com.app.thesewords.recyclerViewAdapters;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,8 @@ public class AdapterBlue extends RecyclerView.Adapter<AdapterBlue.MyView> {
         // Inflate item.xml using LayoutInflator
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         // return itemView
+        int height = parent.getLayoutParams().height;
+        itemView.getLayoutParams().height = height;
         return new MyView(itemView, recyclerViewInterface);
     }
 

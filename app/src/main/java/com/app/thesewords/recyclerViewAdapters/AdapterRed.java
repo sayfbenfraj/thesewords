@@ -76,6 +76,8 @@ public class AdapterRed extends RecyclerView.Adapter<AdapterRed.MyView> {
     {
         // Inflate item.xml using LayoutInflator
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+        int height = parent.getLayoutParams().height;
+        itemView.getLayoutParams().height = height;
         // return itemView
         return new MyView(itemView, recyclerViewInterface);
     }

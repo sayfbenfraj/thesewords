@@ -1,11 +1,13 @@
 package com.app.thesewords;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
@@ -21,6 +23,7 @@ import com.app.thesewords.recyclerViewAdapters.AdapterYellow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends Activity implements RecyclerViewInterface {
@@ -37,11 +40,10 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
     ArrayList<String> sourceBlue;
     ArrayList<String> sourceYellow;
     ArrayList<String> sourceGreen;
-    ArrayList<String> sourcePurple = new ArrayList<String>();
 
     // Array list with cards drawables for recycler view
     ArrayList<Drawable> source;
-    ArrayList<Drawable> sourceDrawablePurple = new ArrayList<Drawable>();
+    ArrayList<Drawable> sourceDrawablePurple = new ArrayList<>();
 
     // Layout Manager
     RecyclerView.LayoutManager RecyclerViewLayoutManagerRed;
@@ -64,6 +66,7 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
     LinearLayoutManager HorizontalLayoutGreen;
     LinearLayoutManager HorizontalLayoutPurple;
 
+    TextToSpeech textToSpeech;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
 
     @Override
@@ -99,13 +102,13 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
         recyclerViewPurple.setLayoutManager(RecyclerViewLayoutManagerPurple);
 
         // Adding items to RecyclerView.
-        sourceRed    = AddCardTextToRecyclerViewAdapter(sourceRed);
-        sourceBlue   = AddCardTextToRecyclerViewAdapter(sourceBlue);
-        sourceYellow = AddCardTextToRecyclerViewAdapter(sourceYellow);
-        sourceGreen  = AddCardTextToRecyclerViewAdapter(sourceGreen);
+        sourceRed    = AddCardTextToRecyclerViewAdapter();
+        sourceBlue   = AddCardTextToRecyclerViewAdapter();
+        sourceYellow = AddCardTextToRecyclerViewAdapter();
+        sourceGreen  = AddCardTextToRecyclerViewAdapter();
 
         // Adding drawable to RecyclerView
-        source = AddCardDrawableToRecyclerViewAdapter(source);
+        source = AddCardDrawableToRecyclerViewAdapter();
         // add a new add drawables to play card recyclerview and hid the view u
 
         // calling constructor of adapter
@@ -137,12 +140,22 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
         recyclerViewGreen.setAdapter(adapterGreen);
         recyclerViewPurple.setAdapter(adapterPurple);
 
+        textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
+            if (status != TextToSpeech.ERROR){
+                textToSpeech.setLanguage(Locale.US);
+            }
+        });
+
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if(textToSpeech !=null){
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
         Toast.makeText(getApplicationContext(), "onPause", Toast.LENGTH_SHORT).show();
     }
 
@@ -176,21 +189,7 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
         Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_SHORT).show();
     }
 
-    private void goToActivity(View v, Class c){
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchActivities(c);
-            }
-        });
-    }
-
-    private void switchActivities(Class c) {
-        Intent switchActivityIntent = new Intent(this, c);
-        startActivity(switchActivityIntent);
-    }
-
-    public static boolean checkAndRequestPermissions(final Activity context) {
+    public static void checkAndRequestPermissions(final Activity context) {
         int WExtstorePermission = ContextCompat.checkSelfPermission(context,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int cameraPermission = ContextCompat.checkSelfPermission(context,
@@ -205,17 +204,15 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
         }
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(context, listPermissionsNeeded
-                            .toArray(new String[listPermissionsNeeded.size()]),
+                            .toArray(new String[0]),
                     REQUEST_ID_MULTIPLE_PERMISSIONS);
-            return false;
         }
-        return true;
     }
 
-    public ArrayList<String> AddCardTextToRecyclerViewAdapter(ArrayList<String> source)
+    public ArrayList<String> AddCardTextToRecyclerViewAdapter()
     {
         // Adding items to ArrayList
-        source = new ArrayList<>();
+        ArrayList<String> source = new ArrayList<>();
         source.add("gfg");
         source.add("is");
         source.add("best");
@@ -227,10 +224,11 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
         return source;
     }
 
-    public ArrayList<Drawable> AddCardDrawableToRecyclerViewAdapter (ArrayList<Drawable> source)
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public ArrayList<Drawable> AddCardDrawableToRecyclerViewAdapter ()
     {
         // Adding items to ArrayList
-        source = new ArrayList<>();
+        ArrayList<Drawable> source = new ArrayList<>();
         source.add(getDrawable(R.drawable.blue_rectangle_black_border));
         source.add(getDrawable(R.drawable.blue_rectangle_black_border));
         source.add(getDrawable(R.drawable.blue_rectangle_black_border));
@@ -244,26 +242,38 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
 
     @Override
     public void onItemClickRed(View view, int position) {
+        setTextToSpeech(sourceRed.get(position));
         sourceDrawablePurple.add(source.get(position));
         adapterPurple.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClickBlue(View view, int position) {
+        setTextToSpeech(sourceBlue.get(position));
         sourceDrawablePurple.add(source.get(position));
         adapterPurple.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClickYellow(View view, int position) {
+        setTextToSpeech(sourceYellow.get(position));
         sourceDrawablePurple.add(source.get(position));
         adapterPurple.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClickGreen(View view, int position) {
+        setTextToSpeech(sourceGreen.get(position));
         sourceDrawablePurple.add(source.get(position));
         adapterPurple.notifyDataSetChanged();
+    }
+
+    public void setTextToSpeech(String text){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            textToSpeech.speak(text.toString(), TextToSpeech.QUEUE_FLUSH, null, null);
+        } else {
+            textToSpeech.speak(text.toString(), TextToSpeech.QUEUE_FLUSH, null);
+        }
     }
 
 }

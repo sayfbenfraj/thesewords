@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +26,6 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
     public static class MyView extends RecyclerView.ViewHolder{
 
         // Text View
-        CardView  cardView;
         ImageView card;
 
         // parameterised constructor for View Holder class
@@ -34,8 +34,7 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
         {
             super(view);
             // initialise TextView with id
-            cardView = view.findViewById(R.id.cardViewPurple);
-            card = view.findViewById(R.id.cardPurple);
+            card = view.findViewById(R.id.cardViewPurple);
         }
     }
 
@@ -56,6 +55,9 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
         // Inflate item.xml using LayoutInflator
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_purple, parent, false);
         // return itemView
+        int height = parent.getLayoutParams().height;
+        itemView.getLayoutParams().height = height;
+        // return itemView
 
         return new MyView(itemView);
     }
@@ -70,8 +72,7 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
         // Set the text of each item of
         // Recycler view with the list item
         holder.card.setImageDrawable(cardDrawableList.get(position));
-        holder.cardView.getLayoutParams().width  = 170;
-        holder.cardView.getLayoutParams().height = 170;
+  ;
     }
 
     // Override getItemCount which Returns
