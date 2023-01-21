@@ -1,66 +1,62 @@
-package com.app.thesewords;
+package com.app.thesewords.recyclerViewAdapters;
 
 import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.view.LayoutInflater;
+
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.app.thesewords.R;
 
 import java.util.List;
 
 // The adapter class which
 // extends RecyclerView Adapter
-public class Adapter
-        extends RecyclerView.Adapter<Adapter.MyView> {
+public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
 
     // List with String type
-    private List<String> list;
+    private List<Drawable> cardDrawableList;
 
     // View Holder class which
     // extends RecyclerView.ViewHolder
-    public class MyView extends RecyclerView.ViewHolder {
+    public static class MyView extends RecyclerView.ViewHolder{
 
         // Text View
+        CardView  cardView;
         ImageView card;
-        TextView  cardText;
 
         // parameterised constructor for View Holder class
         // which takes the view as a parameter
         public MyView(View view)
         {
             super(view);
-
             // initialise TextView with id
-            card = view.findViewById(R.id.card);
-            cardText = view.findViewById(R.id.cardText);
+            cardView = view.findViewById(R.id.cardViewPurple);
+            card = view.findViewById(R.id.cardPurple);
         }
     }
 
     // Constructor for adapter class
     // which takes a list of String type
-    public Adapter(List<String> horizontalList)
+    public AdapterPurple(List<Drawable> cardDrawableHorizontalList)
     {
-        this.list = horizontalList;
+            this.cardDrawableList      = cardDrawableHorizontalList;
     }
 
     // Override onCreateViewHolder which deals
     // with the inflation of the card layout
     // as an item for the RecyclerView.
+
     @Override
     public MyView onCreateViewHolder(ViewGroup parent, int viewType)
     {
-
         // Inflate item.xml using LayoutInflator
-        View itemView
-                = LayoutInflater
-                .from(parent.getContext())
-                .inflate(R.layout.item,
-                        parent,
-                        false);
-
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_purple, parent, false);
         // return itemView
+
         return new MyView(itemView);
     }
 
@@ -72,8 +68,10 @@ public class Adapter
     public void onBindViewHolder(final MyView holder, final int position)
     {
         // Set the text of each item of
-        // Recycler view with the list items
-        holder.cardText.setText(list.get(position));
+        // Recycler view with the list item
+        holder.card.setImageDrawable(cardDrawableList.get(position));
+        holder.cardView.getLayoutParams().width  = 170;
+        holder.cardView.getLayoutParams().height = 170;
     }
 
     // Override getItemCount which Returns
@@ -81,6 +79,7 @@ public class Adapter
     @Override
     public int getItemCount()
     {
-        return list.size();
+        return cardDrawableList.size();
     }
+
 }

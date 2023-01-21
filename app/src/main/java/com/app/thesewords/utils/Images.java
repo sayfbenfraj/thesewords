@@ -1,4 +1,4 @@
-package com.app.thesewords;
+package com.app.thesewords.utils;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.app.thesewords.Card;
+import com.app.thesewords.DataBaseHelper;
+import com.app.thesewords.R;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
