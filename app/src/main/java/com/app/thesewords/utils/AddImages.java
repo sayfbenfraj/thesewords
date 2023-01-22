@@ -78,9 +78,7 @@ public class AddImages extends Activity implements Serializable {
                                     "One or more element are left empty",
                                     Toast.LENGTH_LONG).show();
                         } else {
-                            Card b = new Card(title, "", "", byteArray);
                             Intent i = new Intent(AddImages.this, Images.class);
-                            i.putExtra("SAMPLE_OBJECT", (Serializable) b);
                             startActivity(i);
 
                         }

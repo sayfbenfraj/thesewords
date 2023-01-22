@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.thesewords.Card;
-import com.app.thesewords.DataBaseHelper;
 import com.app.thesewords.R;
 
 import java.io.Serializable;

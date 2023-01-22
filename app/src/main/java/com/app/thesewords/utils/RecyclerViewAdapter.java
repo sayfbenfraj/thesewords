@@ -1,5 +1,7 @@
+
 package com.app.thesewords.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.speech.tts.TextToSpeech;
@@ -50,14 +52,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return new MyViewHolder(view);
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-        byte[] byteArray = mData.get(position).getThumbnail();
+        //byte[] byteArray = mData.get(position).getThumbnail();
 
-        holder.tv_book_title.setText(mData.get(position).getTitle());
-        holder.img_book_thumbnail.setImageBitmap(BitmapFactory.decodeByteArray(byteArray,
-                0, byteArray.length));
+        //holder.tv_book_title.setText(mData.get(position).getTitle());
+        //holder.img_book_thumbnail.setImageBitmap(BitmapFactory.decodeByteArray(byteArray,
+        //        0, byteArray.length));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

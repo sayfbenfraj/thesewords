@@ -174,12 +174,18 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
     @Override
     protected void onRestart() {
         super.onRestart();
+        textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
+            if (status != TextToSpeech.ERROR){
+                textToSpeech.setLanguage(Locale.US);
+            }
+        });
         Toast.makeText(getApplicationContext(), "onRestart", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
         Toast.makeText(getApplicationContext(), "onStart", Toast.LENGTH_SHORT).show();
     }
 
