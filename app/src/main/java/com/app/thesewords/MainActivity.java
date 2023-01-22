@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -40,6 +39,7 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
     ArrayList<String> sourceBlue;
     ArrayList<String> sourceYellow;
     ArrayList<String> sourceGreen;
+    ArrayList<String> sourcePurple = new ArrayList<>();
 
     // Array list with cards drawables for recycler view
     ArrayList<Drawable> source;
@@ -117,7 +117,7 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
         adapterBlue   = new AdapterBlue(sourceBlue,   source, this);
         adapterYellow = new AdapterYellow(sourceYellow, source, this);
         adapterGreen  = new AdapterGreen(sourceGreen,  source, this);
-        adapterPurple = new AdapterPurple(sourceDrawablePurple);
+        adapterPurple = new AdapterPurple(sourcePurple,sourceDrawablePurple);
 
         // Set Horizontal Layout Manager
         // for Recycler view
@@ -190,7 +190,7 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
     }
 
     public static void checkAndRequestPermissions(final Activity context) {
-        int WExtstorePermission = ContextCompat.checkSelfPermission(context,
+        int WEExtortPermission = ContextCompat.checkSelfPermission(context,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int cameraPermission = ContextCompat.checkSelfPermission(context,
                 Manifest.permission.CAMERA);
@@ -198,7 +198,7 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
         if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA);
         }
-        if (WExtstorePermission != PackageManager.PERMISSION_GRANTED) {
+        if (WEExtortPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded
                     .add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
@@ -242,38 +242,42 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
 
     @Override
     public void onItemClickRed(View view, int position) {
-        setTextToSpeech(sourceRed.get(position));
+        String text = sourceRed.get(position);
+        setTextToSpeech(text);
+        sourcePurple.add(text);
         sourceDrawablePurple.add(source.get(position));
-        adapterPurple.notifyDataSetChanged();
+        adapterPurple.notifyItemInserted(sourceDrawablePurple.size());
     }
 
     @Override
     public void onItemClickBlue(View view, int position) {
-        setTextToSpeech(sourceBlue.get(position));
+        String text = sourceBlue.get(position);
+        setTextToSpeech(text);
+        sourcePurple.add(text);
         sourceDrawablePurple.add(source.get(position));
-        adapterPurple.notifyDataSetChanged();
+        adapterPurple.notifyItemInserted(sourceDrawablePurple.size());
     }
 
     @Override
     public void onItemClickYellow(View view, int position) {
-        setTextToSpeech(sourceYellow.get(position));
+        String text = sourceYellow.get(position);
+        setTextToSpeech(text);
+        sourcePurple.add(text);
         sourceDrawablePurple.add(source.get(position));
-        adapterPurple.notifyDataSetChanged();
+        adapterPurple.notifyItemInserted(sourceDrawablePurple.size());
     }
 
     @Override
     public void onItemClickGreen(View view, int position) {
-        setTextToSpeech(sourceGreen.get(position));
+        String text = sourceGreen.get(position);
+        setTextToSpeech(text);
+        sourcePurple.add(text);
         sourceDrawablePurple.add(source.get(position));
-        adapterPurple.notifyDataSetChanged();
+        adapterPurple.notifyItemInserted(sourceDrawablePurple.size());
     }
 
     public void setTextToSpeech(String text){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            textToSpeech.speak(text.toString(), TextToSpeech.QUEUE_FLUSH, null, null);
-        } else {
-            textToSpeech.speak(text.toString(), TextToSpeech.QUEUE_FLUSH, null);
-        }
+        textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
 }

@@ -5,13 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import androidx.cardview.widget.CardView;
+import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.app.thesewords.R;
-
 import java.util.List;
 
 // The adapter class which
@@ -20,6 +16,7 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
 
     // List with String type
     private List<Drawable> cardDrawableList;
+    private List<String> cardTextList;
 
     // View Holder class which
     // extends RecyclerView.ViewHolder
@@ -27,6 +24,7 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
 
         // Text View
         ImageView card;
+        TextView  cardText;
 
         // parameterised constructor for View Holder class
         // which takes the view as a parameter
@@ -34,15 +32,17 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
         {
             super(view);
             // initialise TextView with id
-            card = view.findViewById(R.id.cardViewPurple);
+            card = view.findViewById(R.id.card);
+            cardText = view.findViewById(R.id.cardText);
         }
     }
 
     // Constructor for adapter class
     // which takes a list of String type
-    public AdapterPurple(List<Drawable> cardDrawableHorizontalList)
+    public AdapterPurple(List<String> cardTextDrawableHorizontalList, List<Drawable> cardDrawableHorizontalList)
     {
             this.cardDrawableList      = cardDrawableHorizontalList;
+            this.cardTextList          = cardTextDrawableHorizontalList;
     }
 
     // Override onCreateViewHolder which deals
@@ -53,7 +53,7 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
     public MyView onCreateViewHolder(ViewGroup parent, int viewType)
     {
         // Inflate item.xml using LayoutInflator
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_purple, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         // return itemView
         int height = parent.getLayoutParams().height;
         itemView.getLayoutParams().height = height;
@@ -72,6 +72,7 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
         // Set the text of each item of
         // Recycler view with the list item
         holder.card.setImageDrawable(cardDrawableList.get(position));
+        holder.cardText.setText(cardTextList.get(position));
   ;
     }
 
