@@ -1,5 +1,7 @@
 package com.app.thesewords.recyclerViewAdapters;
 
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,9 +13,11 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.app.thesewords.CardModel;
 import com.app.thesewords.R;
 import com.app.thesewords.RecyclerViewInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // The adapter class which
@@ -59,13 +63,24 @@ public class AdapterBlue extends RecyclerView.Adapter<AdapterBlue.MyView> {
 
     // Constructor for adapter class
     // which takes a list of String type
-    public AdapterBlue(List<String> cardTextHorizontalList,
-                       List<Drawable> cardDrawableHorizontalList,
+    public AdapterBlue(ArrayList<CardModel> cardModalArrayList,
                        RecyclerViewInterface recyclerViewInterface)
     {
-            this.cardTextList          = cardTextHorizontalList;
-            this.cardDrawableList      = cardDrawableHorizontalList;
-            this.recyclerViewInterface = recyclerViewInterface;
+        List<String>   cardTextHorizontalList = new ArrayList<>();
+        List<Drawable> cardDrawableHorizontalList  = new ArrayList<>();;
+
+        for (int i = 0; i < cardModalArrayList.size(); i++) {
+            CardModel card = cardModalArrayList.get(i);
+            String title     = card.getTitle();
+            byte[] thumbnail = card.getThumbnail();
+            Drawable image = new BitmapDrawable(BitmapFactory.decodeByteArray(thumbnail,
+                    0, thumbnail.length));
+            cardTextHorizontalList.add(title);
+            cardDrawableHorizontalList.add(image);
+        }
+        this.recyclerViewInterface = recyclerViewInterface;
+        this.cardDrawableList = cardDrawableHorizontalList;
+        this.cardTextList     = cardTextHorizontalList;
     }
 
     // Override onCreateViewHolder which deals

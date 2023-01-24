@@ -2,8 +2,11 @@ package com.app.thesewords;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 public class DBHandler extends SQLiteOpenHelper {
     // Creating constant variables for application database
@@ -14,6 +17,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TITLE = "Title";
     private static final String CATEGORY = "Category";
     private static final String THUMBNAIL = "Thumbnail";
+
 
     // Creating a constructor for the database handler
     public DBHandler(Context context){
@@ -49,6 +53,34 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.insert(TABLE_NAME, null, values);
         db.close();
+    }
+
+    public ArrayList<CardModel> getCardByCategory(String cat) {
+        // Creating a database for reading our database.
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Creating a cursor with query to read data from database.
+        Cursor cursorCourses = db.rawQuery("SELECT * FROM " + TABLE_NAME +
+                         " WHERE " + CATEGORY + " = '" + cat + "'", null);
+
+        // Creating a new array list.
+        ArrayList<CardModel> cardModalArrayList = new ArrayList<>();
+
+        // moving our cursor to first position.
+        if (cursorCourses.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                cardModalArrayList.add(new CardModel(cursorCourses.getString(1),
+                        cursorCourses.getString(2),
+                        cursorCourses.getBlob(3)));
+            } while (cursorCourses.moveToNext());
+            // moving our cursor to next.
+        }
+        // at last closing our cursor
+        // and returning our array list.
+        cursorCourses.close();
+        db.close();
+        return cardModalArrayList;
     }
 
     @Override

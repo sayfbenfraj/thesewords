@@ -1,5 +1,7 @@
 package com.app.thesewords.recyclerViewAdapters;
 
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.app.thesewords.CardModel;
 import com.app.thesewords.R;
+import com.app.thesewords.RecyclerViewInterface;
+
+import java.util.ArrayList;
 import java.util.List;
 
 // The adapter class which
@@ -39,12 +46,23 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
 
     // Constructor for adapter class
     // which takes a list of String type
-    public AdapterPurple(List<String> cardTextDrawableHorizontalList, List<Drawable> cardDrawableHorizontalList)
+    public AdapterPurple(ArrayList<CardModel> cardModalArrayList)
     {
-            this.cardDrawableList      = cardDrawableHorizontalList;
-            this.cardTextList          = cardTextDrawableHorizontalList;
-    }
+        List<String>   cardTextHorizontalList = new ArrayList<>();
+        List<Drawable> cardDrawableHorizontalList  = new ArrayList<>();;
 
+        for (int i = 0; i < cardModalArrayList.size(); i++) {
+            CardModel card = cardModalArrayList.get(i);
+            String title     = card.getTitle();
+            byte[] thumbnail = card.getThumbnail();
+            Drawable image = new BitmapDrawable(BitmapFactory.decodeByteArray(thumbnail,
+                    0, thumbnail.length));
+             cardTextHorizontalList.add(title);
+            cardDrawableHorizontalList.add(image);
+        }
+        this.cardDrawableList = cardDrawableHorizontalList;
+        this.cardTextList     = cardTextHorizontalList;
+    }
     // Override onCreateViewHolder which deals
     // with the inflation of the card layout
     // as an item for the RecyclerView.
@@ -76,12 +94,22 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
   ;
     }
 
+    public void addItem(CardModel card) {
+        cardTextList.add(card.getTitle());
+        byte[] thumbnail = card.getThumbnail();
+        Drawable image = new BitmapDrawable(BitmapFactory.decodeByteArray(thumbnail,
+                0, thumbnail.length));
+        cardDrawableList.add(image);
+        card.getThumbnail();
+        notifyItemInserted(cardTextList.size());
+    }
+
     // Override getItemCount which Returns
     // the length of the RecyclerView.
     @Override
     public int getItemCount()
     {
-        return cardDrawableList.size();
+        return cardTextList.size();
     }
 
 }

@@ -2,7 +2,13 @@ package com.app.thesewords;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +17,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -42,8 +52,7 @@ public class SplashScreenActivity extends Activity {
         setContentView(R.layout.splash_screen_activity);
 
         // Read data from json file
-        fillCardDataBase();
-
+        fillCardDataBase(dbHandler, getApplicationContext());
         //This is additional feature, used to run a progress bar
         splashProgress = findViewById(R.id.splashProgress);
         playProgress();
@@ -70,27 +79,44 @@ public class SplashScreenActivity extends Activity {
         }
     }
     // Method to fill data base during the splash screen
-    public void fillCardDataBase(){
+    public void fillCardDataBase(DBHandler dbHandler, Context context){
 
         String path = "cards_metadata.json";
-        String jsonFileString = Utils.getJsonFromAssets(getApplicationContext(),
-                path);
+        byte[] thumbnailByteArray;
+
+        String jsonFileString = Utils.getJsonFromAssets(getApplicationContext(), path);
         Log.i("data", jsonFileString);
         Gson gson = new Gson();
         Type listUserType = new TypeToken<List<Card>>() { }.getType();
-
         List<Card> cards = gson.fromJson(jsonFileString, listUserType);
+
         for (int i = 0; i < cards.size(); i++) {
             Card card = cards.get(i);
             String title     = card.getTitle();
             String category  = card.getCategory();
             String thumbnail = card.getThumbnail();
 
-            Log.i("data", title + category + thumbnail + "\n");
+            try {
+                thumbnailByteArray = getDrawable(context,thumbnail+".jpg");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            dbHandler.addNewCard(title,category,thumbnailByteArray);
         }
-        //TODO: Check if the database is full
-        //TODO: if full skip if not fill with cards
-        //TODO: for this we need a jason or something like to store the info to fill the database
+
+
 
     }
+    public static byte[] getDrawable(Context context, String fileName) throws IOException {
+        AssetManager assetManager = context.getAssets();
+        InputStream distro = assetManager.open(fileName);
+        Bitmap bitmap = BitmapFactory.decodeStream(distro);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteMap = stream.toByteArray();
+        distro.close();
+
+        return byteMap;
+    }
+
 }

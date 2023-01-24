@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -35,15 +36,11 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
     RecyclerView recyclerViewPurple;
 
     // Array list for recycler view cards title data source
-    ArrayList<String> sourceRed;
-    ArrayList<String> sourceBlue;
-    ArrayList<String> sourceYellow;
-    ArrayList<String> sourceGreen;
-    ArrayList<String> sourcePurple = new ArrayList<>();
-
-    // Array list with cards drawables for recycler view
-    ArrayList<Drawable> source;
-    ArrayList<Drawable> sourceDrawablePurple = new ArrayList<>();
+   ArrayList<CardModel> sourceRed    = new ArrayList<>();;
+   ArrayList<CardModel> sourceBlue   = new ArrayList<>();;
+   ArrayList<CardModel> sourceYellow = new ArrayList<>();;
+   ArrayList<CardModel> sourceGreen  = new ArrayList<>();;
+   ArrayList<CardModel> sourcePurple = new ArrayList<>();
 
     // Layout Manager
     RecyclerView.LayoutManager RecyclerViewLayoutManagerRed;
@@ -67,32 +64,31 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
     LinearLayoutManager HorizontalLayoutPurple;
 
     TextToSpeech textToSpeech;
+
+    private DBHandler dbHandler;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
         setContentView(R.layout.main_activity);
         checkAndRequestPermissions(MainActivity.this);
+        dbHandler = new DBHandler(MainActivity.this);
 
         // Attach recycler views to layout by id
         recyclerViewRed    =  findViewById(R.id.recyclerview_red);
         recyclerViewBlue   =  findViewById(R.id.recyclerview_blue);
         recyclerViewYellow =  findViewById(R.id.recyclerview_yellow);
         recyclerViewGreen  =  findViewById(R.id.recyclerview_green);
-        recyclerViewPurple   =  findViewById(R.id.recyclerview_play);
+        recyclerViewPurple =  findViewById(R.id.recyclerview_play);
 
         // Create new Recycler view managers
-        RecyclerViewLayoutManagerRed       = new LinearLayoutManager(getApplicationContext());
-        RecyclerViewLayoutManagerBlue      = new LinearLayoutManager(getApplicationContext());
-        RecyclerViewLayoutManagerYellow    = new LinearLayoutManager(getApplicationContext());
-        RecyclerViewLayoutManagerGreen     = new LinearLayoutManager(getApplicationContext());
-        RecyclerViewLayoutManagerPurple    = new LinearLayoutManager(getApplicationContext());
+        RecyclerViewLayoutManagerRed    = new LinearLayoutManager(getApplicationContext());
+        RecyclerViewLayoutManagerBlue   = new LinearLayoutManager(getApplicationContext());
+        RecyclerViewLayoutManagerYellow = new LinearLayoutManager(getApplicationContext());
+        RecyclerViewLayoutManagerGreen  = new LinearLayoutManager(getApplicationContext());
+        RecyclerViewLayoutManagerPurple = new LinearLayoutManager(getApplicationContext());
 
         // Set LayoutManager on Recycler View
         recyclerViewRed.setLayoutManager(RecyclerViewLayoutManagerRed);
@@ -102,22 +98,19 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
         recyclerViewPurple.setLayoutManager(RecyclerViewLayoutManagerPurple);
 
         // Adding items to RecyclerView.
-        sourceRed    = AddCardTextToRecyclerViewAdapter();
-        sourceBlue   = AddCardTextToRecyclerViewAdapter();
-        sourceYellow = AddCardTextToRecyclerViewAdapter();
-        sourceGreen  = AddCardTextToRecyclerViewAdapter();
-
-        // Adding drawable to RecyclerView
-        source = AddCardDrawableToRecyclerViewAdapter();
+        sourceRed    = getCardsByCategoryFromDataBase("household");
+        sourceBlue   = getCardsByCategoryFromDataBase("classroom");
+        sourceYellow = getCardsByCategoryFromDataBase("clothes");
+        sourceGreen  = getCardsByCategoryFromDataBase("other");
         // add a new add drawables to play card recyclerview and hid the view u
 
         // calling constructor of adapter
         // with source list as a parameter
-        adapterRed    = new AdapterRed(sourceRed,    source, this);
-        adapterBlue   = new AdapterBlue(sourceBlue,   source, this);
-        adapterYellow = new AdapterYellow(sourceYellow, source, this);
-        adapterGreen  = new AdapterGreen(sourceGreen,  source, this);
-        adapterPurple = new AdapterPurple(sourcePurple,sourceDrawablePurple);
+        adapterRed    = new AdapterRed(sourceRed, this);
+        adapterBlue   = new AdapterBlue(sourceBlue, this);
+        adapterYellow = new AdapterYellow(sourceYellow, this);
+        adapterGreen  = new AdapterGreen(sourceGreen, this);
+        adapterPurple = new AdapterPurple(sourcePurple);
 
         // Set Horizontal Layout Manager
         // for Recycler view
@@ -145,7 +138,6 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
                 textToSpeech.setLanguage(Locale.US);
             }
         });
-
 
     }
 
@@ -215,75 +207,39 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
         }
     }
 
-    public ArrayList<String> AddCardTextToRecyclerViewAdapter()
+    public  ArrayList<CardModel> getCardsByCategoryFromDataBase(String category)
     {
-        // Adding items to ArrayList
-        ArrayList<String> source = new ArrayList<>();
-        source.add("gfg");
-        source.add("is");
-        source.add("best");
-        source.add("site");
-        source.add("for");
-        source.add("interview");
-        source.add("preparation");
-
-        return source;
-    }
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    public ArrayList<Drawable> AddCardDrawableToRecyclerViewAdapter ()
-    {
-        // Adding items to ArrayList
-        ArrayList<Drawable> source = new ArrayList<>();
-        source.add(getDrawable(R.drawable.blue_rectangle_black_border));
-        source.add(getDrawable(R.drawable.blue_rectangle_black_border));
-        source.add(getDrawable(R.drawable.blue_rectangle_black_border));
-        source.add(getDrawable(R.drawable.blue_rectangle_black_border));
-        source.add(getDrawable(R.drawable.blue_rectangle_black_border));
-        source.add(getDrawable(R.drawable.blue_rectangle_black_border));
-        source.add(getDrawable(R.drawable.blue_rectangle_black_border));
-
-        return source;
+        // Adding items to
+        ArrayList<CardModel> cardModalArrayList = dbHandler.getCardByCategory(category);
+        return cardModalArrayList;
     }
 
     @Override
     public void onItemClickRed(View view, int position) {
-        String text = sourceRed.get(position);
-        setTextToSpeech(text);
-        sourcePurple.add(text);
-        sourceDrawablePurple.add(source.get(position));
-        adapterPurple.notifyItemInserted(sourceDrawablePurple.size());
+        CardModel card = sourceRed.get(position);
+        textToSpeech.speak(card.getTitle(), TextToSpeech.QUEUE_FLUSH, null, null);
+        adapterPurple.addItem(card);
     }
 
     @Override
     public void onItemClickBlue(View view, int position) {
-        String text = sourceBlue.get(position);
-        setTextToSpeech(text);
-        sourcePurple.add(text);
-        sourceDrawablePurple.add(source.get(position));
-        adapterPurple.notifyItemInserted(sourceDrawablePurple.size());
+        CardModel card = sourceBlue.get(position);
+        textToSpeech.speak(card.getTitle(), TextToSpeech.QUEUE_FLUSH, null, null);
+        adapterPurple.addItem(card);
     }
 
     @Override
     public void onItemClickYellow(View view, int position) {
-        String text = sourceYellow.get(position);
-        setTextToSpeech(text);
-        sourcePurple.add(text);
-        sourceDrawablePurple.add(source.get(position));
-        adapterPurple.notifyItemInserted(sourceDrawablePurple.size());
+        CardModel card = sourceYellow.get(position);
+        textToSpeech.speak(card.getTitle(), TextToSpeech.QUEUE_FLUSH, null, null);
+        adapterPurple.addItem(card);
     }
 
     @Override
     public void onItemClickGreen(View view, int position) {
-        String text = sourceGreen.get(position);
-        setTextToSpeech(text);
-        sourcePurple.add(text);
-        sourceDrawablePurple.add(source.get(position));
-        adapterPurple.notifyItemInserted(sourceDrawablePurple.size());
-    }
-
-    public void setTextToSpeech(String text){
-        textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        CardModel card = sourceGreen.get(position);
+        textToSpeech.speak(card.getTitle(), TextToSpeech.QUEUE_FLUSH, null, null);
+        adapterPurple.addItem(card);
     }
 
 }
