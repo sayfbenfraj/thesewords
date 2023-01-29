@@ -8,22 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.app.thesewords.CardModel;
 import com.app.thesewords.R;
-import com.app.thesewords.RecyclerViewInterface;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 // The adapter class which
 // extends RecyclerView Adapter
 public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
 
     // List with String type
-    private List<Drawable> cardDrawableList;
-    private List<String> cardTextList;
+    private final List<Drawable> cardDrawableList;
+    private final List<String> cardTextList;
 
     // View Holder class which
     // extends RecyclerView.ViewHolder
@@ -49,7 +48,7 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
     public AdapterPurple(ArrayList<CardModel> cardModalArrayList)
     {
         List<String>   cardTextHorizontalList = new ArrayList<>();
-        List<Drawable> cardDrawableHorizontalList  = new ArrayList<>();;
+        List<Drawable> cardDrawableHorizontalList  = new ArrayList<>();
 
         for (int i = 0; i < cardModalArrayList.size(); i++) {
             CardModel card = cardModalArrayList.get(i);
@@ -67,14 +66,14 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
     // with the inflation of the card layout
     // as an item for the RecyclerView.
 
+    @NonNull
     @Override
     public MyView onCreateViewHolder(ViewGroup parent, int viewType)
     {
         // Inflate item.xml using LayoutInflator
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         // return itemView
-        int height = parent.getLayoutParams().height;
-        itemView.getLayoutParams().height = height;
+        itemView.getLayoutParams().height = parent.getLayoutParams().height;
         // return itemView
 
         return new MyView(itemView);
@@ -91,7 +90,6 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
         // Recycler view with the list item
         holder.card.setImageDrawable(cardDrawableList.get(position));
         holder.cardText.setText(cardTextList.get(position));
-  ;
     }
 
     public void addItem(CardModel card) {
@@ -110,6 +108,23 @@ public class AdapterPurple extends RecyclerView.Adapter<AdapterPurple.MyView> {
     public int getItemCount()
     {
         return cardTextList.size();
+    }
+
+    public ArrayList getCardTextListList(){
+        return (ArrayList) cardTextList;
+    }
+
+    public void delete(int position){
+        cardTextList.remove(position);
+        cardDrawableList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void clear() {
+        int size = cardTextList.size();
+        cardTextList.clear();
+        cardDrawableList.clear();
+        notifyItemRangeRemoved(0, size);
     }
 
 }

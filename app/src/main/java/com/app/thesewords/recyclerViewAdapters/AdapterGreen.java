@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.thesewords.CardModel;
@@ -25,8 +26,8 @@ public class AdapterGreen extends RecyclerView.Adapter<AdapterGreen.MyView> {
 
     private final RecyclerViewInterface recyclerViewInterface;
     // List with String type
-    private List<String> cardTextList;
-    private List<Drawable> cardDrawableList;
+    private final List<String> cardTextList;
+    private final List<Drawable> cardDrawableList;
 
     // View Holder class which
     // extends RecyclerView.ViewHolder
@@ -45,14 +46,11 @@ public class AdapterGreen extends RecyclerView.Adapter<AdapterGreen.MyView> {
             card = view.findViewById(R.id.card);
             cardText = view.findViewById(R.id.cardText);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (recyclerViewInterface != null) {
-                        int pos = getAdapterPosition();
-                        if (pos != RecyclerView.NO_POSITION){
-                            recyclerViewInterface.onItemClickGreen(view, pos);
-                        }
+            view.setOnClickListener(view1 -> {
+                if (recyclerViewInterface != null) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION){
+                        recyclerViewInterface.onItemClickGreen(view1, pos);
                     }
                 }
             });
@@ -66,7 +64,7 @@ public class AdapterGreen extends RecyclerView.Adapter<AdapterGreen.MyView> {
                         RecyclerViewInterface recyclerViewInterface)
     {
         List<String>   cardTextHorizontalList = new ArrayList<>();
-        List<Drawable> cardDrawableHorizontalList  = new ArrayList<>();;
+        List<Drawable> cardDrawableHorizontalList  = new ArrayList<>();
 
         for (int i = 0; i < cardModalArrayList.size(); i++) {
             CardModel card = cardModalArrayList.get(i);
@@ -86,13 +84,13 @@ public class AdapterGreen extends RecyclerView.Adapter<AdapterGreen.MyView> {
     // with the inflation of the card layout
     // as an item for the RecyclerView.
 
+    @NonNull
     @Override
     public MyView onCreateViewHolder(ViewGroup parent, int viewType)
     {
         // Inflate item.xml using LayoutInflator
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-        int height = parent.getLayoutParams().height;
-        itemView.getLayoutParams().height = height;
+        itemView.getLayoutParams().height = parent.getLayoutParams().height;
         // return itemView
         return new MyView(itemView, recyclerViewInterface);
     }
@@ -102,7 +100,7 @@ public class AdapterGreen extends RecyclerView.Adapter<AdapterGreen.MyView> {
     // and methods related to clicks on
     // particular items of the RecyclerView.
     @Override
-    public void onBindViewHolder(final MyView holder, final int position)
+    public void onBindViewHolder(@NonNull final MyView holder, final int position)
     {
         // Set the text of each item of
         // Recycler view with the list items

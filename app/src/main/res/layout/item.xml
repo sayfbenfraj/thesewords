@@ -25,7 +25,8 @@
             android:scaleType="centerInside"
             android:adjustViewBounds="true"
             app:layout_constrainedHeight="true"
-            android:src="@android:drawable/screen_background_light" />
+            android:src="@android:drawable/screen_background_light"
+            app:ignore="ContentDescription" />
 
     </LinearLayout>
 
@@ -34,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:textColor="@color/black"
         android:gravity="center"/>
 
 </LinearLayout>

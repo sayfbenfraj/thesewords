@@ -1,15 +1,17 @@
 package com.app.thesewords;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
 public class MainActivity extends Activity implements RecyclerViewInterface {
 
     // Cards Categories recycler view
@@ -36,10 +37,10 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
     RecyclerView recyclerViewPurple;
 
     // Array list for recycler view cards title data source
-   ArrayList<CardModel> sourceRed    = new ArrayList<>();;
-   ArrayList<CardModel> sourceBlue   = new ArrayList<>();;
-   ArrayList<CardModel> sourceYellow = new ArrayList<>();;
-   ArrayList<CardModel> sourceGreen  = new ArrayList<>();;
+   ArrayList<CardModel> sourceRed    = new ArrayList<>();
+   ArrayList<CardModel> sourceBlue   = new ArrayList<>();
+   ArrayList<CardModel> sourceYellow = new ArrayList<>();
+   ArrayList<CardModel> sourceGreen  = new ArrayList<>();
    ArrayList<CardModel> sourcePurple = new ArrayList<>();
 
     // Layout Manager
@@ -64,13 +65,19 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
     LinearLayoutManager HorizontalLayoutPurple;
 
     TextToSpeech textToSpeech;
-
+    Button yesButton;
+    Button noButton;
+    ImageView playButton;
+    ImageView deleteButton;
     private DBHandler dbHandler;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.main_activity);
         checkAndRequestPermissions(MainActivity.this);
@@ -139,6 +146,31 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
             }
         });
 
+        yesButton = findViewById(R.id.yesbutton);
+        noButton = findViewById(R.id.nobutton);
+        playButton = findViewById(R.id.playButton);
+        deleteButton = findViewById(R.id.deleteButton);
+
+        yesButton.setOnClickListener(v -> {
+            String text = (String) yesButton.getText();
+            onClickButton(text);
+        });
+
+        noButton.setOnClickListener(v -> {
+            String text = (String) noButton.getText();
+            onClickButton(text);
+        });
+
+        playButton.setOnClickListener(v -> {
+            ArrayList currentList = adapterPurple.getCardTextListList();
+            String result = String.join(", ", currentList);
+            textToSpeech.speak(result, TextToSpeech.QUEUE_FLUSH, null, null);
+
+        });
+
+        deleteButton.setOnClickListener(v -> {
+            adapterPurple.clear();
+        });
     }
 
     @Override
@@ -209,9 +241,7 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
 
     public  ArrayList<CardModel> getCardsByCategoryFromDataBase(String category)
     {
-        // Adding items to
-        ArrayList<CardModel> cardModalArrayList = dbHandler.getCardByCategory(category);
-        return cardModalArrayList;
+        return dbHandler.getCardByCategory(category);
     }
 
     @Override
@@ -240,6 +270,10 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
         CardModel card = sourceGreen.get(position);
         textToSpeech.speak(card.getTitle(), TextToSpeech.QUEUE_FLUSH, null, null);
         adapterPurple.addItem(card);
+    }
+
+    public void onClickButton(String text){
+        textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
 }
