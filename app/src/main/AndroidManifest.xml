@@ -40,5 +40,23 @@
             android:configChanges="orientation|screenSize">
         </activity>
 
+        <activity android:name=".KeyboardActivity"
+            android:label="@string/app_name"
+            android:exported="true"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
+        <activity android:name=".FavoriteActivity"
+            android:label="@string/app_name"
+            android:exported="true"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
+        <activity android:name=".AddCardActivity"
+            android:label="@string/app_name"
+            android:exported="true"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
     </application>
 </manifest>

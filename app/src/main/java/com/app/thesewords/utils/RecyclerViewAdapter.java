@@ -21,7 +21,7 @@ import java.util.Locale;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private Context mContext ;
+    private final Context mContext ;
     public List<Card> mData ;
     private TextToSpeech textToSpeech;
 
@@ -33,9 +33,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view ;
+        View view = null;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.cardveiw_item,parent,false);
+        // view = mInflater.inflate(R.layout.cardveiw_item,parent,false);
 
         // create an object textToSpeech and adding features into it
         textToSpeech = new TextToSpeech(mContext.getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -92,9 +92,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            tv_book_title = (TextView) itemView.findViewById(R.id.book_title_id) ;
-            img_book_thumbnail = (ImageView) itemView.findViewById(R.id.book_img_id);
-            cardView = (CardView) itemView.findViewById(R.id.cardview_id);
+            // tv_book_title = (TextView) itemView.findViewById(R.id.book_title_id) ;
+            // img_book_thumbnail = (ImageView) itemView.findViewById(R.id.book_img_id);
+            // cardView = (CardView) itemView.findViewById(R.id.cardview_id);
 
         }
     }

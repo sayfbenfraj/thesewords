@@ -35,15 +35,15 @@ public class Images extends Activity implements Serializable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.images_activity);
+        // setContentView(R.layout.images_activity);
 
-        addImageButton = findViewById(R.id.add_image);
-        changeGrid     = findViewById(R.id.change_grid);
-        emptyView = findViewById(R.id.empty_view);
-        dataBaseHelper = new DataBaseHelper(this);
-        recyclerView = findViewById(R.id.recyclerview_id);
-        lstCard = new ArrayList<Card>();
-        lstCard = dataBaseHelper.getBooks();
+        // addImageButton = findViewById(R.id.add_image);
+        // changeGrid     = findViewById(R.id.change_grid);
+        // emptyView = findViewById(R.id.empty_view);
+        // dataBaseHelper = new DataBaseHelper(this);
+        // recyclerView = findViewById(R.id.recyclerview_id);
+        // lstCard = new ArrayList<Card>();
+        // lstCard = dataBaseHelper.getBooks();
 
         if(savedInstanceState != null){
             currentGridState = savedInstanceState.getInt("GRID_COUNTER",0);
@@ -79,15 +79,12 @@ public class Images extends Activity implements Serializable {
             recyclerView.setAdapter(myAdapter);
         }
 
-        changeGrid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),
-                        currentGridState));
-                recyclerView.setAdapter(myAdapter);
-                currentGridState = currentGridState + 1;
-                if (currentGridState > 3) {currentGridState = 1;}
-            }
+        changeGrid.setOnClickListener(v -> {
+            recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),
+                    currentGridState));
+            recyclerView.setAdapter(myAdapter);
+            currentGridState = currentGridState + 1;
+            if (currentGridState > 3) {currentGridState = 1;}
         });
     }
 
@@ -144,7 +141,7 @@ public class Images extends Activity implements Serializable {
             Card dene = (Card) i.getSerializableExtra("SAMPLE_OBJECT");
             lstCard.add(dene);
             myAdapter.notifyItemChanged(0);
-            dataBaseHelper.saveBooks((ArrayList<Card>) lstCard);
+            dataBaseHelper.saveBooks(lstCard);
         } else {
             if (lstCard.isEmpty()) {
                 recyclerView.setVisibility(View.GONE);

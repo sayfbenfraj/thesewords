@@ -2,6 +2,7 @@ package com.app.thesewords;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -69,6 +70,9 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
     Button noButton;
     ImageView playButton;
     ImageView deleteButton;
+    ImageView keyboardButton;
+    ImageView favoriteButton;
+    ImageView addCardButton;
     private DBHandler dbHandler;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
 
@@ -146,10 +150,13 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
             }
         });
 
-        yesButton = findViewById(R.id.yesbutton);
-        noButton = findViewById(R.id.nobutton);
-        playButton = findViewById(R.id.playButton);
-        deleteButton = findViewById(R.id.deleteButton);
+        yesButton      = findViewById(R.id.yesbutton);
+        noButton       = findViewById(R.id.nobutton);
+        playButton     = findViewById(R.id.playButton);
+        deleteButton   = findViewById(R.id.deleteButton);
+        keyboardButton = findViewById(R.id.keyboardButton);
+        favoriteButton = findViewById(R.id.favoriteButton);
+        addCardButton  = findViewById(R.id.addCardButton);
 
         yesButton.setOnClickListener(v -> {
             String text = (String) yesButton.getText();
@@ -162,14 +169,33 @@ public class MainActivity extends Activity implements RecyclerViewInterface {
         });
 
         playButton.setOnClickListener(v -> {
-            ArrayList currentList = adapterPurple.getCardTextListList();
+            ArrayList<String> currentList = adapterPurple.getCardTextListList();
             String result = String.join(", ", currentList);
             textToSpeech.speak(result, TextToSpeech.QUEUE_FLUSH, null, null);
 
         });
 
         deleteButton.setOnClickListener(v -> {
+            textToSpeech.stop();
             adapterPurple.clear();
+        });
+
+        keyboardButton.setOnClickListener(v -> {
+            //Todo: make this a function that works for all 3
+            Intent i = new Intent(getApplicationContext(),KeyboardActivity.class);
+            startActivity(i);
+        });
+
+        favoriteButton.setOnClickListener(v -> {
+            //Todo: make this a function that works for all 3
+            Intent i = new Intent(getApplicationContext(),FavoriteActivity.class);
+            startActivity(i);
+        });
+
+        addCardButton.setOnClickListener(v -> {
+            //Todo: make this a function that works for all 3
+            Intent i = new Intent(getApplicationContext(),AddCardActivity.class);
+            startActivity(i);
         });
     }
 
