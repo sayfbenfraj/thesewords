@@ -48,12 +48,9 @@ public class KeyboardActivity extends Activity {
 
         setupKeyboardButtons();
         setupOnTouchButtons();
-
-
-
     }
 
-    private void  setupKeyboardButtons() {
+    private void setupKeyboardButtons() {
         AButton = findViewById(R.id.keyboardButtonA);
         BButton = findViewById(R.id.keyboardButtonB);
         CButton = findViewById(R.id.keyboardButtonC);
@@ -436,7 +433,6 @@ public class KeyboardActivity extends Activity {
             }
 
         });
-
         DeleteButton.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
@@ -463,6 +459,13 @@ public class KeyboardActivity extends Activity {
             }
 
         });
+    }
+    private void setupOnClickButton(){
 
     }
+    //todo: add function to chance the text to speech
+    //todo: add function to concatenate the button pushes into a word and look in data
+    // all cards that equal the word
+    //todo: onclick on the searched cards the word is populated in text
+    //todo: add a way to delete the test
 }
