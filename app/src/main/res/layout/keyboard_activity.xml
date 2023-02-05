@@ -122,7 +122,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/keyboardButton1"
+                android:id="@+id/keyboardButtonQ"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -133,7 +133,7 @@
                 tools:ignore="NestedWeights"/>
 
             <Button
-                android:id="@+id/keyboardButton2"
+                android:id="@+id/keyboardButtonW"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -143,7 +143,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton3"
+                android:id="@+id/keyboardButtonE"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -153,7 +153,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton4"
+                android:id="@+id/keyboardButtonR"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -163,7 +163,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton5"
+                android:id="@+id/keyboardButtonDelete"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -181,7 +181,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/keyboardButton6"
+                android:id="@+id/keyboardButtonT"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -191,7 +191,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton7"
+                android:id="@+id/keyboardButtonY"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -201,7 +201,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton8"
+                android:id="@+id/keyboardButtonU"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -211,7 +211,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton9"
+                android:id="@+id/keyboardButtonI"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -221,7 +221,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton10"
+                android:id="@+id/keyboardButtonO"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -241,7 +241,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/keyboardButton11"
+                android:id="@+id/keyboardButtonP"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -251,7 +251,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton12"
+                android:id="@+id/keyboardButtonA"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -261,7 +261,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton13"
+                android:id="@+id/keyboardButtonS"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -271,7 +271,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton14"
+                android:id="@+id/keyboardButtonD"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -281,7 +281,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton15"
+                android:id="@+id/keyboardButtonF"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -301,7 +301,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/keyboardButton16"
+                android:id="@+id/keyboardButtonG"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -311,7 +311,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton17"
+                android:id="@+id/keyboardButtonH"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -321,7 +321,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton18"
+                android:id="@+id/keyboardButtonJ"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -331,7 +331,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton19"
+                android:id="@+id/keyboardButtonK"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -341,7 +341,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton20"
+                android:id="@+id/keyboardButtonL"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -361,7 +361,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/keyboardButton21"
+                android:id="@+id/keyboardButtonZ"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -371,7 +371,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton22"
+                android:id="@+id/keyboardButtonX"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -381,7 +381,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton23"
+                android:id="@+id/keyboardButtonC"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -391,7 +391,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton24"
+                android:id="@+id/keyboardButtonV"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -401,7 +401,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton25"
+                android:id="@+id/keyboardButtonB"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -421,7 +421,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/keyboardButton26"
+                android:id="@+id/keyboardButtonN"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -431,7 +431,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton27"
+                android:id="@+id/keyboardButtonSpace"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
@@ -439,6 +439,7 @@
                 android:background="@drawable/key_space"/>
 
             <Button
+                android:id="@+id/keyboardButtonSpecialChar"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -448,7 +449,7 @@
                 android:background="@drawable/key_bg"/>
 
             <Button
-                android:id="@+id/keyboardButton28"
+                android:id="@+id/keyboardButtonM"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
