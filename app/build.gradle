@@ -26,6 +26,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     namespace 'com.app.thesewords'
+    buildToolsVersion '30.0.3'
+    dependenciesInfo {
+        includeInApk true
+        includeInBundle true
+    }
 }
 
 dependencies {

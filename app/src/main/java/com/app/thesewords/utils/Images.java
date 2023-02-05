@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.thesewords.Card;
-import com.app.thesewords.R;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,8 +28,10 @@ public class Images extends Activity implements Serializable {
     private TextView emptyView;
     private Button addImageButton;
     private Button changeGrid;
-    private List<Integer> listOfGridOptions;
     private int currentGridState = 3;
+
+    public Images() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

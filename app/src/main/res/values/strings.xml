@@ -32,4 +32,7 @@
     <string name="delete">Delete</string>
     <string name="repeat">Repeat</string>
     <string name="add">ADD</string>
+    <string name="simple_ime">Simple IME</string>
+    <string name="subtype_en_US">English (US)</string>
+    <string name="todo">TODO</string>
 </resources>
