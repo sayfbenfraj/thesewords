@@ -2,11 +2,19 @@ package com.app.thesewords;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 public class KeyboardActivity extends Activity {
 
@@ -39,6 +47,10 @@ public class KeyboardActivity extends Activity {
     Button SpaceButton;
     Button DeleteButton;
     Button SpecialCharButton;
+    private TextToSpeech textToSpeech;
+    public TextView TextViewSpeech;
+    public String CumText = "";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -46,8 +58,32 @@ public class KeyboardActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.keyboard_activity);
 
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                // if No error is found then only it will run
+                if (i != TextToSpeech.ERROR) {
+                    // To Choose language of speech
+                    textToSpeech.setLanguage(Locale.US);
+                }
+            }
+        });
+
+        TextViewSpeech = findViewById(R.id.TextViewSpeech);
+
         setupKeyboardButtons();
         setupOnTouchButtons();
+        CumText = setupOnClickButtons();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(textToSpeech !=null){
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        Toast.makeText(getApplicationContext(), "onPause", Toast.LENGTH_SHORT).show();
     }
 
     private void setupKeyboardButtons() {
@@ -81,6 +117,7 @@ public class KeyboardActivity extends Activity {
         DeleteButton = findViewById(R.id.keyboardButtonDelete);
         SpecialCharButton = findViewById(R.id.keyboardButtonSpecialChar);
     }
+
     private void setupOnTouchButtons(){
         AButton.setOnTouchListener(new View.OnTouchListener() {
 
@@ -460,10 +497,72 @@ public class KeyboardActivity extends Activity {
 
         });
     }
-    private void setupOnClickButton(){
 
+    private String setupOnClickButton(View button){
+        //todo: fix this
+            final String[] letter = {""};
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view)
+                {
+                    Button cb = (Button) view;
+                    letter[0] = cb.getText().toString();
+
+                    if (button.getId() == R.id.keyboardButtonSpace)
+                    {
+                        CumText += " ";
+                    }
+                    else if (button.getId() == R.id.keyboardButtonDelete)
+                    {
+                        CumText = "";
+                    }
+                    else
+                    {
+                        CumText += letter[0];
+                    }
+                    textToSpeech.speak(CumText.toString(), TextToSpeech.QUEUE_FLUSH,null);// Do something
+                    if (CumText != null)
+                    {
+                        TextViewSpeech.setText(CumText);
+                    }
+                }
+            });
+
+            return letter[0];
     }
-    //todo: add function to chance the text to speech
+
+    private String setupOnClickButtons(){
+        CumText = setupOnClickButton(AButton);
+        CumText = setupOnClickButton(BButton);
+        CumText = setupOnClickButton(CButton);
+        CumText = setupOnClickButton(DButton);
+        CumText = setupOnClickButton(EButton);
+        CumText = setupOnClickButton(FButton);
+        CumText = setupOnClickButton(GButton);
+        CumText = setupOnClickButton(HButton);
+        CumText = setupOnClickButton(IButton);
+        CumText = setupOnClickButton(JButton);
+        CumText = setupOnClickButton(KButton);
+        CumText = setupOnClickButton(LButton);
+        CumText = setupOnClickButton(MButton);
+        CumText = setupOnClickButton(NButton);
+        CumText = setupOnClickButton(OButton);
+        CumText = setupOnClickButton(PButton);
+        CumText = setupOnClickButton(QButton);
+        CumText = setupOnClickButton(RButton);
+        CumText = setupOnClickButton(SButton);
+        CumText = setupOnClickButton(TButton);
+        CumText = setupOnClickButton(UButton);
+        CumText = setupOnClickButton(VButton);
+        CumText = setupOnClickButton(WButton);
+        CumText = setupOnClickButton(XButton);
+        CumText = setupOnClickButton(YButton);
+        CumText = setupOnClickButton(ZButton);
+        CumText = setupOnClickButton(SpaceButton);
+        CumText = setupOnClickButton(DeleteButton);
+        return CumText;
+    }
+
     //todo: add function to concatenate the button pushes into a word and look in data
     // all cards that equal the word
     //todo: onclick on the searched cards the word is populated in text
